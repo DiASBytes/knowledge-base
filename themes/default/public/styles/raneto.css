@@ -1,7 +1,7 @@
 
 .header {
   color: #CCC;
-  background: #2C323D;
+  background: #e42139;
 }
 
 .header .container-fluid {
@@ -10,7 +10,7 @@
 }
 
 .header a {
-  color: #DDD;
+  color: #fff;
 }
 
 .header a:hover {
@@ -78,28 +78,18 @@
   text-align: center;
 }
 
-.home-search div form div.form-group {
-  margin: 0 auto;
-}
-
 .home-categories {
   margin: 0 10px;
 }
 
-.home-categories div div.card {
-  border: 0;
-  margin-top: 10px;
-}
-
-.home-categories .card-heading {
+.home-categories .panel-heading {
   margin: 0;
-  font-size: 125%;
-  font-weight: bold;
-  padding: 5px 0;
+  font-size: 100%;
+  font-weight: normal;
 }
 
-.home-categories .card-heading,
-.home-categories .card .page {
+.home-categories .panel-heading,
+.home-categories .panel .page {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

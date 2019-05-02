@@ -2,28 +2,28 @@
 'use strict';
 
 // Modules
-var path                           = require('path');
-var fs                             = require('fs');
-var build_nested_pages             = require('../functions/build_nested_pages.js');
-var marked                         = require('marked');
-var toc                            = require('markdown-toc');
+var path = require('path');
+var fs = require('fs');
+var build_nested_pages = require('../functions/build_nested_pages.js');
+var marked = require('marked');
+var toc = require('markdown-toc');
 var remove_image_content_directory = require('../functions/remove_image_content_directory.js');
 
 const contentProcessors = require('../functions/contentProcessors');
 const contentsHandler = require('../core/contents');
 const utils = require('../core/utils');
 
-function route_wildcard (config) {
+function route_wildcard(config) {
   return function (req, res, next) {
 
     // Skip if nothing matched the wildcard Regex
     if (!req.params[0]) { return next(); }
 
     var suffix = 'edit';
-    var slug   = req.params[0];
+    var slug = req.params[0];
     if (slug === '/') { slug = '/index'; }
 
-    var file_path      = path.normalize(config.content_dir + slug);
+    var file_path = path.normalize(config.content_dir + slug);
     var file_path_orig = file_path;
 
     // Remove "/edit" suffix
@@ -54,7 +54,7 @@ function route_wildcard (config) {
         content = contentProcessors.processVars(content, config);
 
         var template = meta.template || 'page';
-        var render   = template;
+        var render = template;
 
         // Check for "/edit" suffix
         if (file_path_orig.indexOf(suffix, file_path_orig.length - suffix.length) !== -1) {
@@ -64,7 +64,7 @@ function route_wildcard (config) {
             res.redirect('/login');
             return;
           }
-          render  = 'edit';
+          render = 'edit';
 
         } else {
 
@@ -78,7 +78,7 @@ function route_wildcard (config) {
 
           // Render Markdown
           marked.setOptions({
-            langPrefix : ''
+            langPrefix: ''
           });
           content = marked(content);
 
@@ -90,22 +90,27 @@ function route_wildcard (config) {
 
         var canEdit = false;
         if (config.authentication || config.authentication_for_edit) {
-          canEdit = loggedIn && config.allow_editing;
+          canEdit = loggedIn && config.allow_editing && req.session.username === 'admin';
         } else {
           canEdit = config.allow_editing;
         }
 
+        console.log(req.session.username);
+
+        console.log({ canEdit });
+
+
         return res.render(render, {
-          config        : config,
-          pages         : build_nested_pages(pageList),
-          meta          : meta,
-          content       : content,
-          body_class    : template + '-' + contentProcessors.cleanString(slug),
-          last_modified : utils.getLastModified(config, meta, file_path),
-          lang          : config.lang,
-          loggedIn      : loggedIn,
-          username      : (config.authentication ? req.session.username : null),
-          canEdit       : canEdit
+          config: config,
+          pages: build_nested_pages(pageList),
+          meta: meta,
+          content: content,
+          body_class: template + '-' + contentProcessors.cleanString(slug),
+          last_modified: utils.getLastModified(config, meta, file_path),
+          lang: config.lang,
+          loggedIn: loggedIn,
+          username: (config.authentication ? req.session.username : null),
+          canEdit: canEdit
         });
 
       }
