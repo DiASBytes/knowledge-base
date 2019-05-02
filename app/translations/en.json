@@ -25,7 +25,8 @@
   },
 
   "error": {
-    "404": "Whoops. Looks like this page doesn't exist."
+    "404": "Whoops. Looks like this page doesn't exist.",
+    "403": "Whoops. Forbidden"
   },
 
   "edit": {

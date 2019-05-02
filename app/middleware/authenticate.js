@@ -22,13 +22,14 @@ function middleware_authenticate(config) {
             return res.redirect(config.base_url + '/');
           }
         } catch (e) {
-          res.redirect(403, config.base_url + '/');
+          res.status(403).send();
         }
       } else if (!req.session.loggedIn) {
         if (config.googleoauth === true) {
-          res.redirect(403, config.base_url + '/');
+          res.status(403).send();
         } else {
-          res.redirect(403, config.base_url + '/');
+          // res.redirect(403, config.base_url + '/').send();
+          res.status(403).send();
         }
       }
       return next();
