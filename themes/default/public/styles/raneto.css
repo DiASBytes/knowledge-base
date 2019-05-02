@@ -1,3 +1,21 @@
+/* Bootstrap */
+a {
+  color: #e42139;
+}
+
+a:hover {
+  color: black;
+}
+
+.btn-primary {
+  background-color: #e42139;
+  border-color: #e42139;
+}
+
+.btn-primary:hover {
+  background-color: #bb1d30;
+}
+
 
 .header {
   color: #CCC;
